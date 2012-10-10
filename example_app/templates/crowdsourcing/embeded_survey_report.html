@@ -1,0 +1,49 @@
+{% load crowdsourcing %}
+
+<h1>{{ report.get_title }}</h1>
+<p>{{ report.get_summary }}</p>
+
+{% if thanks %}
+  <p>Thanks for your submission.</p>
+{% endif %}
+
+{% if filters %}
+  <h2>Filters:</h2>
+  {% filters_as_ul filters %}
+{% endif %}
+
+{% if not fields %}
+  All questions in this survey have private answers.
+{% endif %}
+
+<h2>Displays:</h2>
+{% for display in report.get_survey_report_displays %}
+  {% if display.is_text %}
+    {{ display.annotation|safe }}
+  {% else %}{% if display.is_pie %}
+    {% for question in display.questions %}
+      {% yahoo_pie_chart display question request.GET %}
+    {% endfor %}
+  {% else %}{% if display.is_map %}
+    {% for question in display.questions %}
+      {% google_map display question report %}
+    {% endfor %}
+  {% else %}{% if display.is_bar %}
+    {% yahoo_bar_chart display request.GET request.user.is_staff %}
+  {% else %}{% if display.is_line %}
+    {% yahoo_line_chart display request.GET request.user.is_staff %}
+  {% else %}{% if display.is_slideshow %}
+    {% for question in display.questions %}
+      {% simple_slideshow display question request.GET "jcarousel-skin-tango" %}
+    {% endfor %}
+  {% else %}{% if display.is_download %}
+    {% download_tags survey %}
+  {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
+{% endfor %}
+{% load_maps_and_charts %}
+
+{% if display_individual_results %}
+  <h2>Submissions:</h2>
+  {% submissions page_obj.object_list fields %}
+  {% paginator survey report pages_to_link page_obj %}
+{% endif %}

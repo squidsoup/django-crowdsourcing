@@ -1,0 +1,128 @@
+Version 1.1.35
+-----------------------
+* Several other relative imports are fixed too.
+
+Version 1.1.34
+-----------------------
+* templatetags/crowdsourcing.py had an import path that didn't work with Pythin 2.7.
+
+Version 1.1.33
+-----------------------
+* templatetags/crowdsourcing.py has correct relative paths that work with Django 1.4.
+
+Version 1.1.32
+-----------------------
+* If crowdsourcing from email setting isn't present, use django default if available.
+
+Version 1.1.31
+-----------------------
+* Changes pages_to_link_from_paginator return format.
+
+Version 1.1.30
+-----------------------
+* Web crawlers keep requesting wacky pages. Just 404.
+
+Version 1.1.29
+-----------------------
+* don't use // in the popup google map url
+
+Version 1.1.28
+-----------------------
+* better get_function
+
+Version 1.1.27
+-----------------------
+* Broke out pages_to_link_from_paginator, a helpful function others may want to use.
+* A link appears below maps offering to let the user embed the map.
+* Handle multiple choice answers with quotes and html differently.
+* Count bar chart example in the documentation
+* Private submissions should be visible to logged in staff users
+
+Version 1.1.26
+-----------------------
+* If no CROWDSOURCING_SURVEY_EMAIL_FROM setting exists, then try DEFAULT_FROM_EMAIL as well.
+* A popup link appears below google maps which allows the user to pop up a full page view of the map.
+
+Backwards incompatible changes
+* views.py loads the crowdsourcing settings as crowdsoucing_settings instead of local_settings
+
+Version 1.1.25
+-----------------------
+* Tweaked how the views load the email address to send notifications about new entries.
+
+Version 1.1.24
+-----------------------
+* The embedding Javascript displays a correct message when the survey requires a login and the user isn't logged in.
+
+Version 1.1.23
+-----------------------
+* csv includs ip address and session id for staff users
+
+Version 1.1.22
+-----------------------
+* Fixed a bug in Survey.is_live regarding the "Never" archive policy.
+
+Version 1.1.21
+-----------------------
+* Python 2.7 friendly imports in crowdsourcing.templatetags
+* Fixed AttributeError: 'list' object has no attribute 'none' on survey report that didn't show individual results but had a result limit.
+
+Version 1.1.20
+-----------------------
+* A new context variable display_individual_results which describes whether you should have an area of the report for individual results.
+
+Version 1.1.19
+-----------------------
+* Maps with limited answers now correctly order by entry date descending.
+* Display answers to private questions if the user is a logged in staff user. This includes pie charts.
+* Reports, such as CSV and JSON, list all answers to bool list questions instead of just the first.
+
+Backwards incompatible changes
+* The thanks_for_entering template tag no longer takes the first parameter called "entered". The function signature is now (request, forms, survey)
+* The SurveyReport model has a new field featured = models.BooleanField(default=False). You will need to add this field to the SurveyReport table.
+* The google_map(display, question, ids) template tag is now google_map(display, question, report).
+* The survey_report.html and embeded_survey_report.html templates no longer get the "ids" context variable.
+
+Version 1.1.9
+-----------------------
+* Don't output <div class='field'> if there isn't an answer.
+* The embedded entry form now uses the exact same template as the full page version. Also, all validation is now server side through AJAX. In other wo
+rds, embedded forms and full page forms are much more consistent.
+* There's a new is_public context variable for survey reports.
+* Survey reports that aren't public do display to logged in staff users.
+* The image enlarging tools now cap the enlarged dimensions to 1000 x 1000.
+* Private question answers are now visible in reports and submission permalinks to staff users.
+* There is a new survey report display that lets the user download the results.
+
+Backwards incompatible changes
+* If you use embedded survey forms with the Javascript that comes with the example app you need a new template: crowdsourcing/embeded_survey_questions.html
+* The GOOGLE_API_KEY settings has been renamed GOOGLE_MAPS_API_KEY.
+* Certain useless survey reports will now return errors in the Django admin. For example, if you specify a bar chart with a sum aggregate type and no field names you'll get an error message.
+
+Version 1.1.8
+-----------------------
+* There is an API that returns csv, json, xml, and html results.
+* Added titles to slideshows and maps.
+* Flickr updates asynchronously which causes fewer timeout issues, and attemplts the same upload multiple times.
+* Don't display not-is_public submissions in aggregate results.
+* Make smarter use of survey report titles and summaries. For example, on a survey report display whichever is first nonempty in this order: survey report summary, survey description, survey tease.
+* Empty submissions were blowing up.
+* When you incorrectly submit a survey form, the form no longer thanks you for entering the survey.
+
+Version 1.1.7
+-----------------------
+* fix for unintentional dependency on flickrapi (now optional)
+
+Version 1.1.6
+-----------------------
+* first release.
+* extensive documentation.
+* numerous bug fixes and enhancements.
+* You can click on images in the results to enlarge them.
+
+Version 1.1.0
+-----------------------
+* The example application is fully functional.
+* A template tag library makes new applications easier to write. It contains
+  tags for Django templates and functions for Mako templates.
+* Various bug fixes.
