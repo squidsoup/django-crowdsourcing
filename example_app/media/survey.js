@@ -2,6 +2,7 @@ var googleMapCallbacks = [];
 var yahooChartCallbacks = [];
 var googleMapAPILoaded = false;
 var yahooChartAPILoaded = false;
+var baseURL = "/questionnaire/";
 function loadMapsAndCharts() {
   /* We don't want to necessarily load the google map and yahoo chart APIs on
    * every page. Luckily, both APIs provide a mechanism for lazy loading.
@@ -55,7 +56,7 @@ function toggleComments(id) {
 
 function loadSurvey(slug, elementId) {
   $(document).ready(function() {
-    var url = "/crowdsourcing/" + slug + "/api/allowed_actions/";
+    var url = baseURL + slug + "/api/allowed_actions/";
     $.getJSON(url, function(data, status) {
       loadSurveyForm(slug,
                      elementId,
@@ -68,7 +69,7 @@ function loadSurvey(slug, elementId) {
 }
 
 function loadSurveyForm(slug, elementId, cantEnter, canView, open, needLogin) {
-  var url = "/crowdsourcing/" + slug + "/api/questions/";
+  var url = baseURL + slug + "/api/questions/";
 
   $.getJSON(url, function(survey, status) {
     var isChoiceType = false;
@@ -115,6 +116,8 @@ function loadSurveyForm(slug, elementId, cantEnter, canView, open, needLogin) {
         $.get(survey.submit_url, queryParametersAsLookup(), function(results, textStatus) {
           var err = "Crowdsourcing encountered and error. Sorry about that!";
           form.html("success" == textStatus ? results : err);
+        }).done(function() {
+          initDatepicker('.datepicker');
         });
       }
     }
@@ -131,7 +134,7 @@ function loadSurveyForm(slug, elementId, cantEnter, canView, open, needLogin) {
 }
 
 function loadSurveyResults(surveySlug, reportSlug, elementId) {
-  var url = "/crowdsourcing/" + surveySlug + "/api/report/";
+  var url = baseURL + surveySlug + "/api/report/";
   if (reportSlug) {
     url += reportSlug + "/";
   }
@@ -226,6 +229,13 @@ function initEnlargeable(parent) {
     var a_inner = makeA().addClass("enlarge_link").text("Enlarge");
     img.replaceWith(div);
     a_outer.append(img)
+  });
+}
+
+function initDatepicker(element) {
+  $(element).datepicker({
+    format: 'dd/mm/yyyy',
+    startView: 2,
   });
 }
 

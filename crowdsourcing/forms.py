@@ -9,6 +9,8 @@ from django.forms import (
     CharField,
     CheckboxSelectMultiple,
     ChoiceField,
+    DateField,
+    DateInput,
     EmailField,
     FloatField,
     Form,
@@ -116,6 +118,8 @@ class BooleanInputAnswer(BaseAnswerForm):
 class TextAreaAnswer(BaseAnswerForm):
     answer = CharField(widget=Textarea)
 
+class DateAnswer(BaseAnswerForm):
+    answer = DateField(widget=DateInput(attrs={'class':'datepicker'}))
 
 class EmailAnswer(BaseAnswerForm):
     answer = EmailField()
@@ -225,6 +229,7 @@ QTYPE_FORM = {
     OPTION_TYPE_CHOICES.FLOAT: FloatInputAnswer,
     OPTION_TYPE_CHOICES.BOOL: BooleanInputAnswer,
     OPTION_TYPE_CHOICES.TEXT: TextAreaAnswer,
+    OPTION_TYPE_CHOICES.DATE: DateAnswer,
     OPTION_TYPE_CHOICES.SELECT: OptionAnswer,
     OPTION_TYPE_CHOICES.CHOICE: OptionRadio,
     OPTION_TYPE_CHOICES.NUMERIC_SELECT: OptionAnswer,

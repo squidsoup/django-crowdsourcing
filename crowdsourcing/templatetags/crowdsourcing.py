@@ -68,7 +68,7 @@ def jquery_and_google_api():
     return mark_safe("\n".join([
         jsapi,
         '<script type="text/javascript">',
-        '  google.load("jquery", "1.4");',
+        '  google.load("jquery", "1.7");',
         '</script>']))
 register.simple_tag(jquery_and_google_api)
 

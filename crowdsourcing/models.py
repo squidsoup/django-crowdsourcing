@@ -186,6 +186,7 @@ class Survey(models.Model):
             OPTION_TYPE_CHOICES.CHAR,
             OPTION_TYPE_CHOICES.PHOTO,
             OPTION_TYPE_CHOICES.VIDEO,
+            OPTION_TYPE_CHOICES.DATE,
             OPTION_TYPE_CHOICES.TEXT)
         return [f for f in self.get_public_fields() if f.option_type in types]
 
@@ -260,6 +261,7 @@ class Survey(models.Model):
 
 OPTION_TYPE_CHOICES = ChoiceEnum(sorted([('char', 'Text Box'),
                                          ('email', 'Email Text Box'),
+                                         ('date', 'Date Box'),
                                          ('photo', 'Photo Upload'),
                                          ('video', 'Video Link Text Box'),
                                          ('location', 'Location Text Box'),
@@ -414,6 +416,8 @@ class Question(models.Model):
             return "boolean_answer"
         elif self.is_float:
             return "float_answer"
+        elif self.is_date:
+            return "date_answer"
         elif self.is_integer:
             return "integer_answer"
         elif ot == OTC.PHOTO:
@@ -797,6 +801,7 @@ class Answer(models.Model):
     submission = models.ForeignKey(Submission)
     question = models.ForeignKey(Question)
     text_answer = models.TextField(blank=True)
+    date_answer = models.DateField(blank=True)
     integer_answer = models.IntegerField(blank=True, null=True)
     float_answer = models.FloatField(blank=True, null=True)
     boolean_answer = models.NullBooleanField()
