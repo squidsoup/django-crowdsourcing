@@ -3,12 +3,14 @@ from __future__ import absolute_import
 import re
 
 from django.contrib import admin
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.core.urlresolvers import reverse
+from django.db.models import ManyToOneRel
 from django.forms import ModelForm, ValidationError
 from django.forms.widgets import Select
 from django.utils.translation import ugettext_lazy as _
 
-from .models import (Question, Survey, Answer, Submission,
+from .models import (Question, Survey, Answer, Section, Submission,
                      SurveyReport, SurveyReportDisplay, OPTION_TYPE_CHOICES,
                      SURVEY_DISPLAY_TYPE_CHOICES,
                      SURVEY_AGGREGATE_TYPE_CHOICES, FORMAT_CHOICES)
@@ -226,3 +228,4 @@ class SurveyReportAdmin(admin.ModelAdmin):
 
 
 admin.site.register(SurveyReport, SurveyReportAdmin)
+

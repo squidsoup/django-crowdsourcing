@@ -107,6 +107,8 @@ class Survey(models.Model):
         help_text=("Send a notification to these e-mail addresses whenever "
                    "someone submits an entry to this survey. Comma "
                    "delimited."))
+    sections = models.ForeignKey('Section', blank=True, null=True,
+                                 editable=True, related_name='sections')
     site = models.ForeignKey(Site)
     flickr_group_id = models.CharField(
         max_length=60,
@@ -305,6 +307,7 @@ class Question(models.Model):
     label = models.TextField(help_text=_("Appears on the results page."))
     help_text = models.TextField(
         blank=True)
+    section = models.ForeignKey('Section', blank=True, null=True, related_name="question_section")
     required = models.BooleanField(
         default=False,
         help_text=_("Unsafe to change on live surveys. Radio button list and "
@@ -443,6 +446,14 @@ class Question(models.Model):
 
 
 FILTER_TYPE = ChoiceEnum("choice range distance")
+
+
+class Section(models.Model):
+    name = models.CharField(max_length=50)
+    survey = models.ForeignKey('Survey', related_name='survey')
+
+    def __unicode__(self):
+        return self.name
 
 
 class Filter:
