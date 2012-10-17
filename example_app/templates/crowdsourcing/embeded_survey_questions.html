@@ -4,8 +4,14 @@
 
 {% if not entered or not valid %}
   {% for form in forms %}
+    {% if form.question.section %}
+      {% ifchanged form.question.section %}
+        <hr/><h4>{{ form.question.section }}</h4>
+      {% endifchanged %}
+    {% endif %}
     {{ form.as_p }}
   {% endfor %}
+  {% csrf_token %}
   <input type="submit" value="Submit" />
   {% if entered %}
     <span class="error">Please fix the problems above.</span>

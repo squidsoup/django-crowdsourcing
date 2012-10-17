@@ -53,11 +53,17 @@ class QuestionForm(ModelForm):
                                     'and underscore.'))
         return fieldname
 
+class SectionForm(ModelForm):
+    model = Section
 
 class QuestionInline(admin.StackedInline):
     model = Question
     extra = 3
     form = QuestionForm
+
+class SectionInline(admin.StackedInline):
+    model = Section
+    form = SectionForm
 
 
 def _flickr_group_choices():
@@ -121,7 +127,8 @@ class SurveyAdmin(admin.ModelAdmin):
         submissions_as)
     list_filter = ('survey_date', 'is_published', 'site')
     date_hierarchy = 'survey_date'
-    inlines = [QuestionInline]
+    exclude = ('sections',)
+    inlines = [SectionInline, QuestionInline]
 
 
 admin.site.register(Survey, SurveyAdmin)
