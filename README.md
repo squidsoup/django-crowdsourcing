@@ -13,4 +13,4 @@ An *Option* type for Dates has been added, with a sample frontend implementation
 
 Sections
 --------
-Questions now have optional Sections. Example usage in a template: example_app/templates/crowdsourcing/embeded_survey_questions.html
+Questions now have optional Sections. Example usage in a template: [embeded_survey_questions.html](https://github.com/squidsoup/django-crowdsourcing/blob/master/example_app/templates/crowdsourcing/embeded_survey_questions.html)
