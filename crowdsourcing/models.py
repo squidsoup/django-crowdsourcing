@@ -274,10 +274,9 @@ OPTION_TYPE_CHOICES = ChoiceEnum(sorted([('char', 'Text Box'),
                                          ('select', 'Drop Down List'),
                                          ('choice', 'Radio Button List'),
                                          ('bool_list', 'Checkbox List'),
-                                         ('numeric_select',
-                                          'Numeric Drop Down List'),
-                                         ('numeric_choice',
-                                          'Numeric Radio Button List')],
+                                         ('numeric_select', 'Numeric Drop Down List'),
+                                         ('numeric_choice', 'Numeric Radio Button List'),
+                                         ('ranked', 'Ranked List')],
                                         key=itemgetter(1)))
 
 
@@ -288,7 +287,8 @@ FILTERABLE_OPTION_TYPES = (OPTION_TYPE_CHOICES.LOCATION,
                            OPTION_TYPE_CHOICES.SELECT,
                            OPTION_TYPE_CHOICES.CHOICE,
                            OPTION_TYPE_CHOICES.NUMERIC_SELECT,
-                           OPTION_TYPE_CHOICES.NUMERIC_CHOICE)
+                           OPTION_TYPE_CHOICES.NUMERIC_CHOICE,
+                           OPTION_TYPE_CHOICES.RANKED,)
 
 
 POSITION_HELP = ("What order does this question appear in the survey form and "
@@ -444,6 +444,10 @@ class Question(models.Model):
     def is_integer(self):
         return self.is_numeric and self.numeric_is_int
 
+    @property
+    def is_date(self):
+        return self is datetime.date
+
 
 FILTER_TYPE = ChoiceEnum("choice range distance")
 
@@ -468,6 +472,7 @@ class Filter:
             return request_data.get(self.key + suffix, "").replace("+", " ")
         if field.option_type in (OPTION_TYPE_CHOICES.BOOL,
                                  OPTION_TYPE_CHOICES.CHOICE,
+                                 OPTION_TYPE_CHOICES.RANKED,
                                  OPTION_TYPE_CHOICES.SELECT,
                                  OPTION_TYPE_CHOICES.NUMERIC_CHOICE,
                                  OPTION_TYPE_CHOICES.NUMERIC_SELECT):
@@ -812,7 +817,7 @@ class Answer(models.Model):
     submission = models.ForeignKey(Submission)
     question = models.ForeignKey(Question)
     text_answer = models.TextField(blank=True)
-    date_answer = models.DateField(blank=True)
+    date_answer = models.DateField(blank=True, null=True)
     integer_answer = models.IntegerField(blank=True, null=True)
     float_answer = models.FloatField(blank=True, null=True)
     boolean_answer = models.NullBooleanField()
