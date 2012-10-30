@@ -100,6 +100,8 @@ class Survey(models.Model):
     starts_at = models.DateTimeField(default=datetime.datetime.now)
     survey_date = models.DateField(blank=True, null=True, editable=False)
     ends_at = models.DateTimeField(null=True, blank=True)
+    has_script = models.BooleanField(default=False,
+                                     help_text="If enabled, template will render script tag for STATIC_URL/surveys/slug-name.js")
     is_published = models.BooleanField(default=False)
     email = models.CharField(
         max_length=255,
