@@ -24,9 +24,9 @@ class RankedChoiceWidget(forms.MultiWidget):
 
     def format_output(self, rendered_widgets):
         markup = """<p class="ranked">
-                    <label>1st</label> %s
-                    <label>2nd</label> %s
-                    <label>3rd</label> %s
+                    <label><span>1<sup>st</sup></span></label> %s
+                    <label><span>2<sup>nd</sup></span></label> %s
+                    <label><span>3<sup>rd</sup></span></label> %s
                     </p>
                     """ % (rendered_widgets[0],
                            rendered_widgets[1],

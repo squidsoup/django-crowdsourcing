@@ -17,6 +17,7 @@ from django.forms import (
     ImageField,
     IntegerField,
     MultipleChoiceField,
+    MultiValueField,
     RadioSelect,
     Select,
     Textarea,
@@ -31,6 +32,7 @@ from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+from .fields import RankedChoiceField
 from .geo import get_latitude_and_longitude
 from .models import OPTION_TYPE_CHOICES, Answer, Survey, Question, Submission
 from .settings import VIDEO_URL_PATTERNS, IMAGE_UPLOAD_PATTERN
@@ -118,8 +120,10 @@ class BooleanInputAnswer(BaseAnswerForm):
 class TextAreaAnswer(BaseAnswerForm):
     answer = CharField(widget=Textarea)
 
+
 class DateAnswer(BaseAnswerForm):
     answer = DateField(widget=DateInput(attrs={'class':'datepicker'}))
+
 
 class EmailAnswer(BaseAnswerForm):
     answer = EmailField()
@@ -221,6 +225,10 @@ class OptionCheckbox(BaseOptionAnswer):
     answer = MultipleChoiceField(widget=CheckboxSelectMultiple)
 
 
+class RankedAnswer(BaseOptionAnswer):
+    answer = RankedChoiceField()
+
+
 # Each question gets a form with one element determined by the type for the
 # answer.
 QTYPE_FORM = {
@@ -239,6 +247,7 @@ QTYPE_FORM = {
     OPTION_TYPE_CHOICES.PHOTO: PhotoUpload,
     OPTION_TYPE_CHOICES.VIDEO: VideoAnswer,
     OPTION_TYPE_CHOICES.LOCATION: LocationAnswer,
+    OPTION_TYPE_CHOICES.RANKED: RankedAnswer,
 }
 
 

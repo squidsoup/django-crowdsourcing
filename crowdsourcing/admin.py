@@ -39,7 +39,7 @@ class QuestionForm(ModelForm):
                         "For numeric select or numeric choice, all your "
                         "options must be a number. This is not a number: ") +
                         option)
-        if numeric_list or option_type in (OTC.SELECT, OTC.CHOICE,):
+        if numeric_list or option_type in (OTC.SELECT, OTC.CHOICE, OTC.RANKED):
             if not opts.splitlines():
                 raise ValidationError(_(
                     "Choice type questions require a list of options."))
