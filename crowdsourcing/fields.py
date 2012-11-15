@@ -4,6 +4,8 @@ from .widgets import RankedChoiceWidget
 from django.forms import MultiValueField
 from django.forms.fields import ChoiceField
 
+import copy
+
 try:
     from sorl.thumbnail.fields import ImageWithThumbnailsField
 except ImportError:
@@ -18,7 +20,10 @@ except ImportError:
 class RankedChoiceField(MultiValueField):
     widget = RankedChoiceWidget
 
-    def __init__(self, choices=(), *args, **kwargs):
+    def __init__(self, choices=None, *args, **kwargs):
+        if choices is None:
+            choices = ()
+
         fields = (
                 ChoiceField(),
                 ChoiceField(),
@@ -27,6 +32,10 @@ class RankedChoiceField(MultiValueField):
         super(RankedChoiceField, self).__init__(fields, *args, **kwargs)
         self.choices = choices
 
+    def __deepcopy__(self, memo):
+        result = super(RankedChoiceField, self).__deepcopy__(memo)
+        result.fields = copy.deepcopy(self.fields, memo)
+        return result
 
     def compress(self, data_list):
         if data_list:
