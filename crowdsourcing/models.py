@@ -818,7 +818,7 @@ class Submission(models.Model):
 class Answer(models.Model):
     submission = models.ForeignKey(Submission)
     question = models.ForeignKey(Question)
-    text_answer = models.TextField(blank=True)
+    text_answer = models.TextField(blank=True, null=True)
     date_answer = models.DateField(blank=True, null=True)
     integer_answer = models.IntegerField(blank=True, null=True)
     float_answer = models.FloatField(blank=True, null=True)
