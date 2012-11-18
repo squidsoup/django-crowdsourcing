@@ -1,6 +1,6 @@
 django-crowdsourcing
 ====================
-This fork adds some additional features to django-crowdsourcing.
+This fork adds some additional features and bugfixes to django-crowdsourcing.
 
 [upstream](http://code.google.com/p/django-crowdsourcing/) on Google Code
 
