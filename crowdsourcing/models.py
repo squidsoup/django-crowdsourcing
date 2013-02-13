@@ -7,6 +7,7 @@ from math import sin, cos
 from operator import itemgetter
 import re
 from textwrap import fill
+from markdown import markdown
 
 try:
     import simplejson as json
@@ -306,6 +307,7 @@ class Question(models.Model):
                     'alphanumerics and underscores (no spaces).'))
     question = models.TextField(help_text=_(
         "Appears on the survey entry page."))
+    question_html = models.TextField(editable=False, blank=True, null=True)
     label = models.TextField(help_text=_("Appears on the results page."))
     help_text = models.TextField(
         blank=True)
@@ -390,6 +392,7 @@ class Question(models.Model):
                     self.numeric_is_int = False
         elif self.option_type == OTC.FLOAT:
             self.numeric_is_int = False
+        self.question_html = markdown(self.question)
         super(Question, self).save(*args, **kwargs)
 
     @property

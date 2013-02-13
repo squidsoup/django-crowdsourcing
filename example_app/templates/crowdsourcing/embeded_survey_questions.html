@@ -1,7 +1,6 @@
 {% load crowdsourcing %}
 
 {% thanks_for_entering request forms survey %}
-
 {% if not entered or not valid %}
   {% for form in forms %}
     {% if form.question.section %}
@@ -9,7 +8,12 @@
         <hr/><h4>{{ form.question.section }}</h4>
       {% endifchanged %}
     {% endif %}
-    {{ form.as_p }}
+    <div id="{{ form.question.fieldname }}">
+      {% if form.question.question_html %}
+        {{ form.question.question_html|safe }}
+      {% endif %}
+      {{ form.answer}}
+    </div>
   {% endfor %}
   {% csrf_token %}
   <input type="submit" value="Submit" />
