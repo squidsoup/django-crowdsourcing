@@ -7,7 +7,6 @@
     {% if form.question.section %}
       {% ifchanged form.question.section %}
         <hr/><h4>{{ form.question.section }}</h4>
-        <p>{{ form.question.section.description }}</p>
       {% endifchanged %}
     {% endif %}
     {{ form.as_p }}

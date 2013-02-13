@@ -144,6 +144,7 @@ function loadSurveyResults(surveySlug, reportSlug, elementId) {
       wrapper.html(results);
       initEnlargeable(wrapper);
     } else {
+
       wrapper.html("The reports appear to be broken. Sorry about that! " +
                    "<input type='hidden' value='" + textStatus + "' />");
     }

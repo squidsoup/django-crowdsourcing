@@ -5,15 +5,18 @@
   {% include "header_tags.html" %}
 </head>
 <body>
+  {% if survey.has_script %}
+    <script src="{{ STATIC_URL }}js/surveys/{{ survey.slug }}.js"></script>
+  {% endif %}
 
-<p>This page demostrates how to embed surveys and survey reports anywhere on
-your site. To see it in action, set a survey up and make it public.</p>
-{% if latest_survey %}
+  <p>This page demostrates how to embed surveys and survey reports anywhere on
+  your site. To see it in action, set a survey up and make it public.</p>
+  {% if latest_survey %}
   <div id="latest_survey_div">
     <img src="/media/img/loading.gif" alt="Loading..." />
   </div>
   <script type="text/javascript">
-    loadSurvey('{{ latest_survey.slug }}', 'latest_survey_div');
+    $.when(loadSurvey('{{ latest_survey.slug }}', 'latest_survey_div')).then(bindEvents());
   </script>
   {% if latest_survey.can_have_public_submissions %}
     <div id="latest_survey_results_div">
