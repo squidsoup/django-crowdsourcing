@@ -301,7 +301,7 @@ POSITION_HELP = ("What order does this question appear in the survey form and "
 class Question(models.Model):
     survey = models.ForeignKey(Survey, related_name="questions")
     fieldname = models.CharField(
-        max_length=32,
+        max_length=55,
         help_text=_('a single-word identifier used to track this value; '
                     'it must begin with a letter and may contain '
                     'alphanumerics and underscores (no spaces).'))
@@ -458,7 +458,7 @@ FILTER_TYPE = ChoiceEnum("choice range distance")
 
 
 class Section(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     survey = models.ForeignKey('Survey', related_name='survey')
 
@@ -917,7 +917,7 @@ class SurveyReport(models.Model):
     """
     survey = models.ForeignKey(Survey)
     title = models.CharField(
-        max_length=50,
+        max_length=100,
         blank=True,
         help_text=_("You may leave this field blank. Crowdsourcing will use "
                     "the survey title as a default."))
