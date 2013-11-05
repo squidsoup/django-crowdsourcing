@@ -12,6 +12,9 @@ sorl-thumbnail==3.2.5
 # for ordering inlines
 -e git://github.com/jpwatts/django-positions.git#egg=django-positions
 
+# for unicode csv writer support
+unicodecsv
+
 # For geocoding addresses and address lookups
 geopy
 

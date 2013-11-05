@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-import csv
+import unicodecsv as csv
 from datetime import datetime
 import httplib
 from itertools import count
